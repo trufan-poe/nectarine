@@ -14,7 +14,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
 
         {:ok, application}
 
-      {:error, changeset} ->
+      {:error, _changeset} ->
         # Return validation errors as an error object
         {:ok, %{message: "Validation failed"}}
     end

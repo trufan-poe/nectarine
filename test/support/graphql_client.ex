@@ -3,7 +3,7 @@ defmodule NectarineWeb.Graphql.Client do
   GraphQL client helper functions for testing.
   """
 
-  import Plug.Conn
+  # import Plug.Conn
   import Phoenix.ConnTest
   @endpoint NectarineWeb.Endpoint
 

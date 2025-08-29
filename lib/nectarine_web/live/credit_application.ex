@@ -1,6 +1,5 @@
 defmodule NectarineWeb.CreditApplicationLive do
   use NectarineWeb, :live_view
-  alias Nectarine.CreditApplications
 
   def mount(_params, _session, socket) do
     {:ok,
@@ -34,15 +33,14 @@ defmodule NectarineWeb.CreditApplicationLive do
   def handle_event("financial-info-complete", %{"data" => data}, socket) do
     # Create the credit application via GraphQL
     case create_application_via_graphql(Map.merge(socket.assigns.form_data, data)) do
+      {:ok, %{message: message}} ->
+        {:noreply, assign(socket, error: message)}
       {:ok, result} ->
         {:noreply,
          assign(socket,
            step: 3,
            application_result: result
          )}
-
-      {:error, error} ->
-        {:noreply, assign(socket, error: error)}
     end
   end
 
