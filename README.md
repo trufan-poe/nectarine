@@ -17,15 +17,16 @@ A full-stack credit approval application built with Elixir/Phoenix that assesses
 - **Database**: PostgreSQL with Ecto
 - **Frontend**: Phoenix LiveView with Tailwind CSS
 - **PDF Generation**: pdf_generator library
-- **Email**: Swoosh with local development preview
+- **Email**: Swoosh with Resend API
 - **GraphQL**: Absinthe for API endpoints
 
 ## 📋 Requirements
 
 - Elixir 1.15+
 - Erlang/OTP 24+
-- PostgreSQL
+- Docker (for PostgreSQL)
 - Node.js 18+ (for Tailwind CSS)
+- Resend API token (for email delivery)
 
 ## 🚀 Quick Start
 
@@ -37,13 +38,41 @@ cd nectarine
 mix deps.get
 ```
 
-### 2. Database Setup
+### 2. Setup PostgreSQL with Docker
+
+```bash
+# Start PostgreSQL container
+docker run --name postgres -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=nectarine_dev -p 5432:5432 -d postgres:15
+
+# Verify it's running
+docker ps
+```
+
+### 3. Environment Configuration
+
+Create a `.env` file in the project root:
+
+```bash
+# .env
+export RESEND_API_KEY=your_resend_api_token_here
+export DATABASE_URL=postgres://postgres:postgres@localhost:5432/nectarine_dev
+```
+
+Load the environment variables:
+
+```bash
+source .env
+```
+
+**Note**: You'll need to get a Resend API token from [resend.com](https://resend.com). Sign up for a free account and generate an API key.
+
+### 4. Database Setup
 
 ```bash
 mix ecto.setup
 ```
 
-### 3. Build Frontend Assets
+### 5. Build Frontend Assets
 
 ```bash
 cd assets
@@ -52,15 +81,31 @@ npm install
 cd ..
 ```
 
-### 4. Start the Server
+### 6. Start the Server
 
 ```bash
 mix phx.server
 ```
 
-### 5. Visit the Application
+### 7. Visit the Application
 
 Open [http://localhost:4000/credit-application](http://localhost:4000/credit-application)
+
+## 🐳 Docker Commands
+
+```bash
+# Start PostgreSQL
+docker start postgres
+
+# Stop PostgreSQL
+docker stop postgres
+
+# Remove PostgreSQL container
+docker rm postgres
+
+# View PostgreSQL logs
+docker logs postgres
+```
 
 ## 📱 How It Works
 
@@ -103,10 +148,21 @@ mix ecto.reset
 
 # Run migrations
 mix ecto.migrate
+
+# Access PostgreSQL directly
+docker exec -it postgres psql -U postgres -d nectarine_dev
 ```
 
 ### Email Preview
 In development, emails are previewed at [http://localhost:4000/dev/mailbox](http://localhost:4000/dev/mailbox)
+
+## 🔑 API Keys Required
+
+### Resend API Token
+- **Purpose**: Email delivery service
+- **Get it from**: [resend.com](https://resend.com)
+- **Setup**: Add to `.env` file as `RESEND_API_KEY`
+- **Free tier**: 3,000 emails/month
 
 ## 📁 Project Structure
 
@@ -126,6 +182,7 @@ nectarine/
 │   ├── js/                           # JavaScript
 │   └── build.sh                      # Asset build script
 ├── priv/                             # Static files & migrations
+├── .env                              # Environment variables (create this)
 └── test/                             # Test suite
 ```
 
