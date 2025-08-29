@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" class="[scrollbar-gutter:stable]">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="csrf-token" content={get_csrf_token()}/>
+    <title>Nectarine</title>
+    <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"} />
+    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+  </head>
+  <body class="bg-white antialiased">
+    <header class="container mx-auto px-6 sm:px-8">
+      <div class="flex items-center justify-between gap-6 py-4">
+        <a href="/" class="text-2xl font-bold text-gray-900">
+          Nectarine
+        </a>
+      </div>
+    </header>
+    <main class="container mx-auto px-6 sm:px-8">
+      <div class="py-8">
+        <%= @inner_content %>
+      </div>
+    </main>
+  </body>
+</html>
