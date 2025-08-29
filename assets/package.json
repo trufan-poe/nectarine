@@ -1,0 +1,15 @@
+{
+  "name": "nectarine-assets",
+  "version": "1.0.0",
+  "description": "Frontend assets for Nectarine Credit Approval app",
+  "scripts": {
+    "build": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --watch",
+    "build:prod": "tailwindcss -i ./css/app.css -o ../priv/static/assets/app.css --minify",
+    "build:js": "esbuild js/app.js --bundle --outdir=../priv/static/assets --external:phoenix --external:phoenix_live_view",
+    "build:js:watch": "esbuild js/app.js --bundle --outdir=../priv/static/assets --external:phoenix --external:phoenix_live_view --watch"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.0",
+    "esbuild": "^0.19.0"
+  }
+}

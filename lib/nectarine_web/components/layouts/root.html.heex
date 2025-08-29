@@ -6,7 +6,17 @@
     <meta name="csrf-token" content={get_csrf_token()}/>
     <title>Nectarine Credit Approval</title>
     <link phx-track-static rel="stylesheet" href={~p"/assets/app.css"}/>
-    <script defer phx-track-static type="text/javascript" src={~p"/assets/app.js"}></script>
+    
+    <!-- LiveView client from CDN -->
+    <script type="module">
+      import {Socket} from "https://cdn.jsdelivr.net/npm/phoenix/+esm";
+      import {LiveSocket} from "https://cdn.jsdelivr.net/npm/phoenix_live_view/+esm";
+
+      const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+      const liveSocket = new LiveSocket("/live", Socket, { params: { _csrf_token: csrfToken } });
+      liveSocket.connect();
+      window.liveSocket = liveSocket;
+    </script>
   </head>
   <body>
     <header class="container">
@@ -18,4 +28,4 @@
       <%= @inner_content %>
     </main>
   </body>
-  </html>
+</html>
