@@ -51,8 +51,7 @@ defmodule Nectarine.MixProject do
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
       {:absinthe_phoenix, "~> 2.0"},
-      {:bamboo, "~> 2.2"},
-      {:bamboo_smtp, "~> 4.0"},
+      {:swoosh, "~> 1.15"},
       {:pdf_generator, "~> 0.6"},
       {:telemetry_metrics, "~> 1.0"},
       {:telemetry_poller, "~> 1.0"},
@@ -60,7 +59,8 @@ defmodule Nectarine.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.2.0"},
       {:bandit, "~> 1.5"},
-      {:plug_cowboy, "~> 2.6"}
+      {:plug_cowboy, "~> 2.6"},
+      {:resend, "~> 0.4.0"}
     ]
   end
 

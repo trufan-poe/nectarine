@@ -23,13 +23,8 @@ config :nectarine, NectarineWeb.Endpoint,
   live_view: [signing_salt: "X0U/dDu5"]
 
 config :nectarine, Nectarine.Mailer,
-  adapter: Bamboo.SMTPAdapter,
-  server: "smtp.gmail.com",
-  port: 587,
-  username: "nectarine.app@gmail.com",
-  password: "Nectarine123",
-  tls: :if_available,
-  retries: 1
+  adapter: Resend.Swoosh.Adapter,
+  api_key: System.get_env("RESEND_API_KEY")
 
 # Configures Elixir's Logger
 config :logger, :default_formatter,

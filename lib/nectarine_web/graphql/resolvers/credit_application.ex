@@ -2,6 +2,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
   alias Nectarine.CreditApplications
   alias Nectarine.Mailer
   alias Nectarine.Email
+  require Logger
 
   def create(_parent, %{input: params}, _resolution) do
     case CreditApplications.create_credit_application(params) do
@@ -28,8 +29,14 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
   end
 
   defp send_approval_email(application) do
-    application
-    |> Email.approval_email()
-    |> Mailer.deliver_now()
+    email =
+      application
+      |> Email.approval_email()
+
+    Logger.info("Sending email to #{application.email}")
+    case Mailer.deliver(email) do
+      {:ok, resp} -> Logger.info("Email sent: #{inspect(resp)}")
+      {:error, reason} -> Logger.error("Email failed: #{inspect(reason)}")
+    end
   end
 end

@@ -61,3 +61,6 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Use local adapter for emails (preview in browser)
+config :nectarine, Nectarine.Mailer, adapter: Swoosh.Adapters.Local

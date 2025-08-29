@@ -41,7 +41,7 @@ defmodule NectarineWeb.Graphql.CreditApplicationsTest do
         "additional_income" => true,
         "monthly_income" => "5000.00",
         "monthly_expenses" => "2000.00",
-        "email" => "test@example.com"
+        "email" => "tshepok13@gmail.com"
       }
 
       result = Client.query!(conn, @create_application_mutation, %{input: input})
@@ -51,7 +51,10 @@ defmodule NectarineWeb.Graphql.CreditApplicationsTest do
       assert application["riskScore"] == 11
       assert application["status"] == "approved"
       assert application["approvedAmount"] == "36000.00"
-      assert application["email"] == "test@example.com"
+      assert application["email"] == "tshepok13@gmail.com"
+      
+      # Add a small delay to allow email to be sent asynchronously
+      Process.sleep(100)
     end
 
     test "rejects application with low risk score", %{conn: conn} do
@@ -63,7 +66,7 @@ defmodule NectarineWeb.Graphql.CreditApplicationsTest do
         "additional_income" => false,
         "monthly_income" => "1000.00",
         "monthly_expenses" => "800.00",
-        "email" => "test@example.com"
+        "email" => "tshepok13@gmail.com"
       }
 
       result = Client.query!(conn, @create_application_mutation, %{input: input})

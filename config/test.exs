@@ -25,3 +25,6 @@ config :logger, level: :warning
 
 # Initialize plugs at runtime for faster test compilation
 config :phoenix, :plug_init_mode, :runtime
+
+# Use test adapter for emails (no actual sending)
+# config :nectarine, Nectarine.Mailer, adapter: Swoosh.Adapters.Test

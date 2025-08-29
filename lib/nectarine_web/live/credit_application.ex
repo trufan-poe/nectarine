@@ -35,6 +35,7 @@ defmodule NectarineWeb.CreditApplicationLive do
     case create_application_via_graphql(Map.merge(socket.assigns.form_data, data)) do
       {:ok, %{message: message}} ->
         {:noreply, assign(socket, error: message)}
+
       {:ok, result} ->
         {:noreply,
          assign(socket,
