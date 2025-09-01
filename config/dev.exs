@@ -63,4 +63,7 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 
 # Use local adapter for emails (preview in browser)
-config :nectarine, Nectarine.Mailer, adapter: Swoosh.Adapters.Local
+# config :nectarine, Nectarine.Mailer, adapter: Swoosh.Adapters.Local
+config :nectarine, Nectarine.Mailer,
+  adapter: Resend.Swoosh.Adapter,
+  api_key: System.fetch_env!("RESEND_API_KEY")
