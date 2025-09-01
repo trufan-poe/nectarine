@@ -20,6 +20,15 @@ defmodule Nectarine.PDFGenerator do
     </html>
     """
 
-    PdfGenerator.generate(html_content)
+    case PdfGenerator.generate(html_content) do
+      {:ok, path} when is_binary(path) ->
+        File.read(path)
+
+      {:ok, path, _meta} ->
+        File.read(path)
+
+      other ->
+        other
+    end
   end
 end
