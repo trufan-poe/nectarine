@@ -1,4 +1,11 @@
 defmodule Nectarine.CreditApplications.CreditApplication do
+  @moduledoc """
+  Ecto schema for credit applications.
+  
+  Defines the database structure and validation rules for credit applications,
+  including risk scoring and approval logic.
+  """
+  
   use Ecto.Schema
   import Ecto.Changeset
 

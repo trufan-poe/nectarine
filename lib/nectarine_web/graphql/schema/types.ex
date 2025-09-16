@@ -1,4 +1,10 @@
 defmodule NectarineWeb.Graphql.Schema.Types do
+  @moduledoc """
+  GraphQL type definitions for the credit application system.
+  
+  Defines custom scalar types and input/output types for GraphQL operations.
+  """
+  
   use Absinthe.Schema.Notation
 
   scalar :decimal do

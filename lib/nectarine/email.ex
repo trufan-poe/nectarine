@@ -1,4 +1,10 @@
 defmodule Nectarine.Email do
+  @moduledoc """
+  Email functionality for credit application notifications.
+  
+  Handles sending approval emails with PDF attachments to applicants.
+  """
+  
   import Swoosh.Email
   alias Nectarine.PDFGenerator
 

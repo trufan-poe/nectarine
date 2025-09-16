@@ -1,5 +1,11 @@
 # lib/nectarine/pdf_generator.ex
 defmodule Nectarine.PDFGenerator do
+  @moduledoc """
+  PDF generation functionality for credit applications.
+  
+  Generates PDF documents from credit application data for approval letters
+  and application summaries.
+  """
   def generate_application_pdf(application) do
     html_content = """
     <html>

@@ -1,4 +1,10 @@
 defmodule NectarineWeb.Graphql.Schema do
+  @moduledoc """
+  Main GraphQL schema definition for the credit application system.
+  
+  Defines queries, mutations, and imports type definitions.
+  """
+  
   use Absinthe.Schema
   import_types(NectarineWeb.Graphql.Schema.Types)
 
