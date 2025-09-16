@@ -36,6 +36,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
       |> Email.approval_email()
 
     Logger.info("Sending email to #{application.email}")
+
     case Mailer.deliver(email) do
       {:ok, resp} -> Logger.info("Email sent: #{inspect(resp)}")
       {:error, reason} -> Logger.error("Email failed: #{inspect(reason)}")

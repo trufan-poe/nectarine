@@ -1,6 +1,6 @@
 defmodule NectarineWeb.Graphql.CreditApplicationsTest do
   use NectarineWeb.ConnCase, async: false
-  
+
   alias NectarineWeb.Graphql.Client
 
   # Helper function to convert struct to input map
@@ -97,7 +97,7 @@ defmodule NectarineWeb.Graphql.CreditApplicationsTest do
     end
 
     test "fails with missing required fields", %{conn: conn} do
-      input = 
+      input =
         build(:credit_application, has_job: true, job_12_months: nil)
         |> struct_to_input()
 
@@ -106,6 +106,7 @@ defmodule NectarineWeb.Graphql.CreditApplicationsTest do
       case result do
         %{"errors" => [error]} ->
           assert error["message"] =~ "Argument \"input\" has invalid value"
+
         %{"data" => %{"createCreditApplication" => %{"message" => message}}} ->
           assert message =~ "Validation failed"
       end

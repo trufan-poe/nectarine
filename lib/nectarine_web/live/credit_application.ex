@@ -37,7 +37,7 @@ defmodule NectarineWeb.CreditApplicationLive do
     # Flatten the nested data structure to match the schema
     risk_data = Map.get(socket.assigns.form_data, "risk_assessment", %{})
     all_data = Map.merge(risk_data, data)
-    
+
     case create_application_via_graphql(all_data) do
       {:ok, %{message: message}} ->
         {:noreply, assign(socket, errors: [message])}

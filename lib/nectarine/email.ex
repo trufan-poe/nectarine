@@ -20,12 +20,14 @@ defmodule Nectarine.Email do
         # Log the error and still send the email without attachment
         require Logger
         Logger.error("Failed to generate PDF: #{inspect(reason)}")
-        
+
         new()
         |> to(application.email)
         |> from("noreply@sixkube.com")
         |> subject("Credit Approval - Congratulations!")
-        |> text_body("Your credit application has been approved! (PDF attachment could not be generated)")
+        |> text_body(
+          "Your credit application has been approved! (PDF attachment could not be generated)"
+        )
     end
   end
 end
