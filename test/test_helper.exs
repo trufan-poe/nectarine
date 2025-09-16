@@ -12,4 +12,4 @@ case Nectarine.Repo.start_link() do
   {:error, {:already_started, _pid}} -> :ok
 end
 
-Code.require_file("test/support/graphql_client.ex")
+# GraphQL client is loaded automatically with the test support files

@@ -9,6 +9,8 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
       {:ok, application} ->
         # Always return the application, whether approved or rejected
         # Only send email for approved applications
+        # TODO: Consider using Oban or another task runner for more robust
+        # background job processing with retries and persistence
         if application.status == "approved" do
           Task.async(fn -> send_approval_email(application) end)
         end

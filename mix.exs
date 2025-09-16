@@ -38,29 +38,50 @@ defmodule Nectarine.MixProject do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
+    deps(:prod) ++ deps(:dev) ++ deps(:test)
+  end
+
+  defp deps(:prod) do
     [
       {:phoenix, "~> 1.8.0"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.13"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_dashboard, "~> 0.8.3"},
       {:phoenix_live_view, "~> 1.0.12"},
       {:phoenix_html, "~> 4.0"},
       {:phoenix_template, "~> 1.0"},
-      {:phoenix_live_reload, "~> 1.4", only: :dev},
       {:absinthe, "~> 1.7"},
       {:absinthe_plug, "~> 1.5"},
       {:absinthe_phoenix, "~> 2.0"},
-      {:swoosh, "~> 1.15"},
       {:pdf_generator, "~> 0.6"},
-      {:telemetry_metrics, "~> 1.0"},
+      {:resend, "~> 0.4.0"},
+      {:phoenix_live_dashboard, "~> 0.8.3"},
+      {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
+      {:tailwind, "~> 0.2.0", runtime: Mix.env() == :dev},
+      {:swoosh, "~> 1.11"},
+      {:finch, "~> 0.13"},
+      {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.26"},
+      {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
-      {:dns_cluster, "~> 0.2.0"},
-      {:bandit, "~> 1.5"},
-      {:plug_cowboy, "~> 2.6"},
-      {:resend, "~> 0.4.0"}
+      {:dns_cluster, "~> 0.1.1"},
+      {:bandit, "~> 1.0"}
+    ]
+  end
+
+  defp deps(:dev) do
+    [
+      {:phoenix_live_reload, "~> 1.2", only: :dev},
+      {:dialyxir, "~> 1.4", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp deps(:test) do
+    [
+      {:ex_machina, "~> 2.7.0", only: :test},
+      {:faker, "~> 0.18", only: :test},
+      {:mox, "~> 1.1", only: :test}
     ]
   end
 

@@ -24,6 +24,7 @@ defmodule Nectarine.DataCase do
       import Ecto.Changeset
       import Ecto.Query
       import Nectarine.DataCase
+      import Nectarine.Factory
     end
   end
 

@@ -28,11 +28,13 @@ defmodule NectarineWeb.ConnCase do
       import Plug.Conn
       import Phoenix.ConnTest
       import NectarineWeb.ConnCase
+      import Nectarine.Factory
     end
   end
 
   setup tags do
-    Nectarine.DataCase.setup_sandbox(tags)
+    pid = Ecto.Adapters.SQL.Sandbox.start_owner!(Nectarine.Repo, shared: not tags[:async])
+    on_exit(fn -> Ecto.Adapters.SQL.Sandbox.stop_owner(pid) end)
     {:ok, conn: Phoenix.ConnTest.build_conn()}
   end
 end
