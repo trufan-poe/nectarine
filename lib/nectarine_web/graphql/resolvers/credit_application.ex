@@ -10,9 +10,13 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
   alias Nectarine.Email
   require Logger
 
+  @type create_result :: {:ok, map()} | {:error, String.t()}
+  @type get_result :: {:ok, CreditApplications.CreditApplication.t()} | {:error, String.t()}
+
   @doc """
   Creates a new credit application and sends approval email if approved.
   """
+  @spec create(any(), %{input: map()}, any()) :: create_result()
   def create(_parent, %{input: params}, _resolution) do
     case CreditApplications.create_credit_application(params) do
       {:ok, application} ->
@@ -23,6 +27,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
     end
   end
 
+  @spec handle_approved_application(CreditApplications.CreditApplication.t()) :: create_result()
   defp handle_approved_application(application) do
     if application.status == "approved" do
       # TODO: Consider using Oban or another task runner for more robust
@@ -36,6 +41,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
   @doc """
   Retrieves a credit application by ID.
   """
+  @spec get(any(), %{id: integer()}, any()) :: get_result()
   def get(_parent, %{id: id}, _resolution) do
     case CreditApplications.get_credit_application(id) do
       nil -> {:error, "Not found"}
@@ -44,6 +50,7 @@ defmodule NectarineWeb.Graphql.Resolvers.CreditApplication do
   end
 
   # Sends approval email for approved credit applications.
+  @spec send_approval_email(CreditApplications.CreditApplication.t()) :: :ok
   defp send_approval_email(application) do
     email =
       application

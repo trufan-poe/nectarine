@@ -9,6 +9,23 @@ defmodule Nectarine.CreditApplications.CreditApplication do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{
+    id: integer() | nil,
+    has_job: boolean() | nil,
+    job_12_months: boolean() | nil,
+    owns_home: boolean() | nil,
+    owns_car: boolean() | nil,
+    additional_income: boolean() | nil,
+    risk_score: integer() | nil,
+    monthly_income: Decimal.t() | nil,
+    monthly_expenses: Decimal.t() | nil,
+    approved_amount: Decimal.t() | nil,
+    email: String.t() | nil,
+    status: String.t(),
+    inserted_at: DateTime.t() | nil,
+    updated_at: DateTime.t() | nil
+  }
+
   schema "credit_applications" do
     field :has_job, :boolean
     field :job_12_months, :boolean
@@ -25,6 +42,7 @@ defmodule Nectarine.CreditApplications.CreditApplication do
     timestamps()
   end
 
+  @spec changeset(t(), map()) :: Ecto.Changeset.t()
   def changeset(credit_application, attrs) do
     credit_application
     |> cast(attrs, [
@@ -42,6 +60,7 @@ defmodule Nectarine.CreditApplications.CreditApplication do
     |> calculate_approved_amount()
   end
 
+  @spec calculate_risk_score(Ecto.Changeset.t()) :: Ecto.Changeset.t()
   defp calculate_risk_score(changeset) do
     score =
       if(get_field(changeset, :has_job), do: 4, else: 0) +
@@ -53,6 +72,7 @@ defmodule Nectarine.CreditApplications.CreditApplication do
     put_change(changeset, :risk_score, score)
   end
 
+  @spec calculate_approved_amount(Ecto.Changeset.t()) :: Ecto.Changeset.t()
   defp calculate_approved_amount(changeset) do
     case get_field(changeset, :risk_score) do
       score when score > 6 ->
